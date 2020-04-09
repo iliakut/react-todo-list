@@ -1,30 +1,7 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import AppHeader from "./components/AppHeader/AppHeader";
-import TodoList from "./components/TodoList/TodoList";
-import SearchPanel from "./components/SearchPanel/SearchPanel";
-import ItemStatusFilter from "./components/ItemStatusFilter/ItemStatusFilter";
-import "./index.css"
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-const App = () => {
+import App from "./components/App/App";
 
-  const todoData = [
-    {label: 'Drink Coffee', important: false, id: 1},
-    {label: 'Make Awesome App', important: true, id: 2},
-    {label: 'Have a lunch', important: false, id: 3}
-  ];
-
-  return (
-    <div className="todo-app">
-      <AppHeader toDo={1} done={3} />
-      <div className="top-panel d-flex">
-        <SearchPanel />
-        <ItemStatusFilter />
-      </div>
-
-      <TodoList todos={todoData} />
-    </div>
-  );
-};
-
-ReactDOM.render(<App/>, document.getElementById('root'));
+ReactDOM.render(<App />,
+  document.getElementById('root'));
