@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AppHeader from "./components/AppHeader";
-import TodoList from "./components/TodoList";
-import SearchPanel from "./components/SearchPanel";
-import ItemStatusFilter from "./components/ItemStatusFilter";
+import AppHeader from "./components/AppHeader/AppHeader";
+import TodoList from "./components/TodoList/TodoList";
+import SearchPanel from "./components/SearchPanel/SearchPanel";
+import ItemStatusFilter from "./components/ItemStatusFilter/ItemStatusFilter";
 import "./index.css"
 
 const App = () => {
