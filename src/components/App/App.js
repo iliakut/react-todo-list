@@ -47,38 +47,40 @@ export default class App extends Component {
     });
   };
 
+  toggleProperty(arr, id, propName) {
+    const newArr = [...arr];
+
+    const newItem = newArr.find((item) => item.id === id);
+    newItem[propName] = !newItem[propName];
+
+    return newArr;
+  };
+
   onToggleImportant = (id) => {
     this.setState(({todoData}) => {
-      const newTodoData = [...todoData];
-
-      const newTodoItem = newTodoData.find((item) => item.id === id);
-      newTodoItem.important = !newTodoItem.important;
-
       return {
-        todoData: newTodoData
+        todoData: this.toggleProperty(todoData, id, 'important')
       }
     })
   };
 
   onToggleDone = (id) => {
     this.setState(({todoData}) => {
-      const newTodoData = [...todoData];
-
-      const newTodoItem = newTodoData.find((item) => item.id === id);
-      newTodoItem.done = !newTodoItem.done;
-
       return {
-        todoData: newTodoData
+        todoData: this.toggleProperty(todoData, id, 'done')
       }
     })
   };
 
   render() {
     const {todoData} = this.state;
+    const doneCount = todoData
+      .filter(el => el.done).length;
+    const todoCount = todoData.length - doneCount;
 
    return (
      <div className="todo-app">
-       <AppHeader toDo={1} done={3}/>
+       <AppHeader toDo={todoCount} done={doneCount}/>
        <div className="top-panel d-flex">
          <SearchPanel/>
          <ItemStatusFilter/>
