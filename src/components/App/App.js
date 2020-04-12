@@ -1,9 +1,9 @@
 import React, {Component} from "react";
+import "./App.css";
 import AppHeader from "../AppHeader/AppHeader";
 import SearchPanel from "../SearchPanel/SearchPanel";
 import TodoList from "../TodoList/TodoList";
 import ItemStatusFilter from "../ItemStatusFilter/ItemStatusFilter";
-import "./App.css";
 import ItemAddForm from "../ItemAddForm/ItemAddForm";
 
 export default class App extends Component {
