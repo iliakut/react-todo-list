@@ -95,10 +95,12 @@ export default class App extends Component {
     const doneCount = todoData
       .filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
-    // let filteredTodoData = todoData;
-    // if (currentFilter) {
-    //   filteredTodoData = todoData.filter(item => item[currentFilter]);
-    // }
+
+    let filteredTodoData = todoData;
+    const activeFilter = filterData.find(item => item.activated);
+    if (activeFilter.label === 'Done') {
+      filteredTodoData = todoData.filter(item => item.done)
+    }
 
    return (
      <div className="todo-app">
@@ -115,7 +117,7 @@ export default class App extends Component {
        </div>
 
        <TodoList
-         todos={todoData}
+         todos={filteredTodoData}
          onDeleted={this.deleteItem}
          onToggleImportant={this.onToggleImportant}
          onToggleDone={this.onToggleDone}
