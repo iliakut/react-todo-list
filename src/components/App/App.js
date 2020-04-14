@@ -90,17 +90,25 @@ export default class App extends Component {
     })
   };
 
+  filterList(list, label) {
+    switch (label) {
+      case 'Done':
+        return list.filter(item => item.done);
+      case 'Active':
+        return list.filter(item => !item.done);
+      default:
+        return list;
+    }
+  }
+
   render() {
     const {todoData, filterData} = this.state;
     const doneCount = todoData
       .filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
 
-    let filteredTodoData = todoData;
     const activeFilter = filterData.find(item => item.activated);
-    if (activeFilter.label === 'Done') {
-      filteredTodoData = todoData.filter(item => item.done)
-    }
+    const filteredTodoData = this.filterList(todoData, activeFilter.label);
 
    return (
      <div className="todo-app">
