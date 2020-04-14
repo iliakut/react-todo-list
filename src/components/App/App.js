@@ -14,7 +14,12 @@ export default class App extends Component {
       this.createTodoItem('Drink coffee'),
       this.createTodoItem('Make awesome app'),
       this.createTodoItem('Have a lunch'),
-    ]
+    ],
+    filterData: [
+      {label: 'All', activated: true},
+      {label: 'Active', activated: false},
+      {label: 'Done', activated: false},
+    ],
   };
 
   createTodoItem(label) {
@@ -47,10 +52,10 @@ export default class App extends Component {
     });
   };
 
-  toggleProperty(arr, id, propName) {
+  toggleProperty(arr, id, propName, key = 'id') {
     const newArr = [...arr];
 
-    const newItem = newArr.find((item) => item.id === id);
+    const newItem = newArr.find((item) => item[key] === id);
     newItem[propName] = !newItem[propName];
 
     return newArr;
@@ -72,18 +77,41 @@ export default class App extends Component {
     })
   };
 
+  onFilterClick = (label) => {
+    this.setState(({filterData}) => {
+      const newFilterData = [...filterData];
+      newFilterData.forEach(item => {
+        item.activated = item.label === label;
+      });
+
+      return {
+        filterData: newFilterData
+      }
+    })
+  };
+
   render() {
-    const {todoData} = this.state;
+    const {todoData, filterData} = this.state;
     const doneCount = todoData
       .filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
+    // let filteredTodoData = todoData;
+    // if (currentFilter) {
+    //   filteredTodoData = todoData.filter(item => item[currentFilter]);
+    // }
 
    return (
      <div className="todo-app">
-       <AppHeader toDo={todoCount} done={doneCount}/>
+       <AppHeader
+         toDo={todoCount}
+         done={doneCount}
+       />
        <div className="top-panel d-flex">
          <SearchPanel/>
-         <ItemStatusFilter/>
+         <ItemStatusFilter
+           filterData={filterData}
+           onFilterClick={this.onFilterClick}
+         />
        </div>
 
        <TodoList
