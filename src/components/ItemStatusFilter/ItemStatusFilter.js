@@ -1,18 +1,22 @@
-import React, {Component} from "react";
+import React from "react";
 import "./ItemStatusFilter.css";
+import FilterButton from "../FilterButton/FilterButton";
 
-export default class ItemStatusFilter extends Component {
+const ItemStatusFilter = ({filterData, onFilterClick}) => {
 
-  render() {
-    return (
-      <div className="btn-group">
-        <button type="button"
-                className="btn btn-info">All</button>
-        <button type="button"
-                className="btn btn-outline-secondary">Active</button>
-        <button type="button"
-                className="btn btn-outline-secondary">Done</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="btn-group">
+      {
+        filterData.map(item => (
+          <FilterButton
+            key={item.label}
+            {...item}
+            onFilterClick={onFilterClick}
+          />
+        ))
+      }
+    </div>
+  );
+};
+
+export default ItemStatusFilter;
