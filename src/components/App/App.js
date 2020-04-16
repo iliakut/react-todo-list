@@ -103,6 +103,9 @@ export default class App extends Component {
   };
 
   searchOnList(list, text) {
+    if (!text) {
+      return list;
+    }
     return list.filter(item => item.label.toLowerCase().includes(text))
   };
 
