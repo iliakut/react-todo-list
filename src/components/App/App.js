@@ -20,6 +20,7 @@ export default class App extends Component {
       {label: 'Active', activated: false},
       {label: 'Done', activated: false},
     ],
+    searchText: ''
   };
 
   createTodoItem(label) {
@@ -99,16 +100,27 @@ export default class App extends Component {
       default:
         return list;
     }
-  }
+  };
+
+  searchOnList(list, text) {
+    return list.filter(item => item.label.toLowerCase().includes(text))
+  };
+
+  onSearch = (text) => {
+    this.setState({
+      searchText: text
+    });
+  };
 
   render() {
-    const {todoData, filterData} = this.state;
+    const {todoData, filterData, searchText} = this.state;
     const doneCount = todoData
       .filter(el => el.done).length;
     const todoCount = todoData.length - doneCount;
 
     const activeFilter = filterData.find(item => item.activated);
     const filteredTodoData = this.filterList(todoData, activeFilter.label);
+    const filteredSearchedTodoData = this.searchOnList(filteredTodoData, searchText);
 
    return (
      <div className="todo-app">
@@ -117,7 +129,10 @@ export default class App extends Component {
          done={doneCount}
        />
        <div className="top-panel d-flex">
-         <SearchPanel/>
+         <SearchPanel
+           searchText={searchText}
+           onSearch={this.onSearch}
+         />
          <ItemStatusFilter
            filterData={filterData}
            onFilterClick={this.onFilterClick}
@@ -125,7 +140,7 @@ export default class App extends Component {
        </div>
 
        <TodoList
-         todos={filteredTodoData}
+         todos={filteredSearchedTodoData}
          onDeleted={this.deleteItem}
          onToggleImportant={this.onToggleImportant}
          onToggleDone={this.onToggleDone}
